@@ -1,0 +1,269 @@
+$strong-cyan: hsl(172, 67%, 45%);
+$weak-cyan: hsl(172, 90%, 59%);
+$very-dark-cyan: hsl(183, 100%, 15%);
+$dark-greyish-cyan: hsl(186, 14%, 43%);
+$grayish-cyan: hsl(184, 14%, 56%);
+$light-grayish-cyan: hsl(185, 41%, 84%);
+$very-light-grayish-cyan: hsl(189, 41%, 97%);
+$white: hsl(0, 0%, 100%);
+
+* {
+    font-size: 24px;
+    font-family: 'Space Mono', monospace;
+    box-sizing: border-box;
+
+    body {
+        margin: 0;
+        background-color: $light-grayish-cyan;
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+            img {
+                margin-bottom: 2rem;
+            }
+
+            .container {
+                background-color: $white;
+                border-radius: .5rem;
+                padding: 1.5rem;
+                width: 375px;
+
+                .calc-container {
+                    .input-wrapper {
+                        margin-top: 1rem;
+
+                        &:first-child {
+                            margin-top: 0;
+                        }
+
+                        label {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: baseline;
+                            font-size: .7rem;
+                            color: $grayish-cyan;
+
+                            &.error {
+                                span {
+                                    &:after{
+                                        font-size: .6rem;
+                                        content: attr(data-error);
+                                        color: rgb(182, 68, 68);
+                                    }
+                                }
+                            }
+                        }
+
+                        input {
+                            width: 100%;
+                            padding: .2rem 1rem;
+                            outline: none;
+                            border: 0;
+                            border-radius: .2rem;
+                            text-align: right;
+                            color: $very-dark-cyan;
+                            background-color: $very-light-grayish-cyan;
+
+                            &.dolar-icon {
+                                background-image: url(../images/icon-dollar.svg);
+                                background-position: .5rem .65rem;
+                                background-repeat: no-repeat;
+                            }
+
+                            &.people-icon {
+                                background-image: url(../images/icon-person.svg);
+                                background-position: .5rem .65rem;
+                                background-repeat: no-repeat;
+                            }
+
+                            &:hover {
+                                cursor: pointer;
+                                outline: $strong-cyan auto 1px;
+                            }
+
+                            &:focus-visible {
+                                outline: $strong-cyan auto 1px;
+                            }
+
+                            &.error {
+                                outline: rgb(182, 68, 68) auto 1px;
+                            }
+                        }
+                    }
+
+                    .tip-buttons-wrapper {
+                        margin-top: 1.5rem;
+                        p {
+                            font-size: .7rem;
+                            color: $grayish-cyan;
+                        }
+
+                        .tip-buttons {
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: space-between;
+                            
+                            button, input {
+                                flex-shrink: 1;
+                                margin-bottom: .5rem;
+                                border-radius: .2rem;
+                                padding: .3rem .5rem;
+                                border: 0;
+                                width: 48%;
+                            }
+
+                            button {
+                                background-color: $very-dark-cyan;
+                                color: $white;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    color: $very-dark-cyan;
+                                    background-color: $weak-cyan;
+                                }
+
+                                &:active {
+                                    opacity: .85;
+                                }
+
+                                &.active {
+                                    background-color: $weak-cyan;
+                                    color: $very-dark-cyan;
+                                }
+                            }
+
+                            input {
+                                padding-right: 1rem;
+                                background-color: $very-light-grayish-cyan;
+                                text-align: right;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    outline: $very-dark-cyan auto 1px;
+                                }
+
+                                &:focus-visible {
+                                    outline: $very-dark-cyan auto 1px;
+                                }
+
+                                &.active {
+                                    outline: $weak-cyan auto 1px;
+                                }
+
+                                &.error {
+                                    outline: rgb(182, 68, 68) auto 1px;;
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                .summary-container {
+                    margin-top: 1rem;
+                    background-color: $very-dark-cyan;
+                    border-radius: .3rem;
+                    padding: 1rem;
+
+                    .row {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .description {
+                            p {
+                                &.top {
+                                    font-size: .65rem;
+                                    color: $white;
+                                    margin-bottom: 0;
+                                }
+
+                                &.bottom {
+                                    font-size: .6rem;
+                                    color: $light-grayish-cyan;
+                                    margin-top: 0;
+                                }
+                            }
+                        }
+
+                        .amount {
+                            font-size: 1.2rem;
+                            color: $strong-cyan;
+                        }
+                    }
+
+                    button {
+                        text-transform: uppercase;
+                        font-size: .8rem;
+                        padding: .3rem 0;
+                        margin-top: .5rem;
+                        width: 100%;
+                        color: $very-dark-cyan;
+                        background-color: $strong-cyan;
+                        outline: none;
+                        border: 0;
+                        border-radius: .2rem;
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: $weak-cyan;
+                        }
+
+                        &:active {
+                            opacity: .85;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1000px) {
+    * {
+        body {
+            main {
+                .container {
+                    width: 920px;
+                    display: flex;
+                    flex-direction: row;
+
+                    .calc-container {
+                        padding: 1rem;
+                        width: 50%;
+
+                        .tip-buttons-wrapper {
+                            .tip-buttons {
+                                button, input {
+                                    width: 31%;
+                                }
+                                input {
+                                    padding-right: .5rem;
+                                }
+                            }
+                        }
+                    }
+
+                    .summary-container {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        width: 50%;
+                        height: 100%;
+
+                        margin-top: 0;
+
+                        button {
+                            align-self: flex-end;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

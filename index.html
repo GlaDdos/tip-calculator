@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/main.css">
+
+  <title>Frontend Mentor | Tip calculator app</title>
+
+</head>
+
+<body>
+  <main>
+    <img src="./images/logo.svg" alt="splitter logo">
+    <div class="container">
+      <div class="calc-container">
+        <div class="input-wrapper">
+          <label for="bill-amount">
+            Bill
+            <span></span>
+          </label>
+          <input class="dolar-icon" name="bill-input" id="bill-amount" placeholder="0"/>
+        </div>
+
+        <div class="tip-buttons-wrapper">
+          <p>Select Tip %</p>
+          <div class="tip-buttons" id="tip_buttons">
+            <button class="clickable" value="5">5%</button>
+            <button class="clickable" value="10">10%</button>
+            <button class="clickable" value="15">15%</button>
+            <button class="clickable active" value="20">20%</button>
+            <button class="clickable" value="25">25%</button>
+            <input class="clickable" type="text" placeholder="Custom" id="custom_tip">
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="people-amount">
+            Number of People
+            <span></span>
+          </label>
+          <input class="people-icon" name="people-input" id="people-amount" placeholder="1" value="1"/>
+        </div>
+
+      </div>
+
+      <div class="summary-container">
+        <div>
+          <div class="row">
+            <div class="description">
+              <p class="top">Tip Amount</p>
+              <p class="bottom">/ person</p>
+            </div>
+            <span class="amount" id="tip_amount">$0.00</span>
+          </div>
+  
+          <div class="row">
+            <div class="description">
+              <p class="top">Total</p>
+              <p class="bottom">/ person</p>
+            </div>
+            <span class="amount" id="total_amount">$0.00</span>
+          </div>
+        </div>
+
+        <button id="reset_button">Reset</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const buttons = document.getElementById('tip_buttons').getElementsByTagName('button');
+    const bill_input = document.getElementById('bill-amount');
+    const people_amount_input = document.getElementById('people-amount');
+    const custom_tip = document.getElementById('custom_tip');
+    const tip_amount = document.getElementById('tip_amount');
+    const total_amount = document.getElementById('total_amount');
+    const tip_buttons = document.getElementById('tip_buttons');
+    const reset_button = document.getElementById('reset_button');
+
+    let current_tip = tip_buttons.getElementsByClassName('active')[0].value;
+
+    bill_input.addEventListener('input', function () {
+      recalculate();
+    });
+
+    people_amount_input.addEventListener('input', function () {
+      recalculate();
+    });
+
+    custom_tip.addEventListener('click', function () {
+      let active_buttons = tip_buttons.getElementsByClassName('active');
+
+      if (active_buttons.length > 0) {
+        active_buttons[0].classList.remove('active');
+      }
+
+      this.classList.add('active');
+    });
+
+    custom_tip.addEventListener('input', function () {
+      if (isNaN(this.value) || this.value < 0) {
+        this.classList.add('error');
+        return;
+      } else {
+        if (this.classList.contains('error')) {
+          this.classList.remove('error');
+        }
+        recalculate();
+      }
+    });
+
+    [...buttons].forEach(button => {
+      button.addEventListener('click', function () {
+        let active_buttons = tip_buttons.getElementsByClassName('active');
+
+        if (active_buttons.length > 0) {
+          active_buttons[0].classList.remove('active');
+        }
+
+        button.classList.add('active');
+        recalculate();
+
+      });
+    });
+
+
+    reset_button.addEventListener('click', function() {
+      bill_input.value = '';
+      people_amount_input.value = 1;
+      tip_amount.innerHTML = '$0.00';
+      total_amount.textContent = '$0.00';
+    });
+
+    function getTip(bill, selectedTip, nopeople) {
+      return Math.round(bill * selectedTip / nopeople / 100 * 100) / 100;
+    }
+
+    function getTotal(bill, selectedTip, nopeople) {
+      return Math.round((Number(bill) + bill * selectedTip / nopeople / 100) / nopeople * 100) / 100;
+    }
+
+    function recalculate() {
+      current_tip = tip_buttons.getElementsByClassName('active')[0].value;
+
+      if (
+        validateInput(bill_input) &&
+        validateInput(people_amount_input) && !isNaN(current_tip)
+      ) {
+        let tip_value = getTip(bill_input.value, current_tip, people_amount_input.value);
+        let total_value = getTotal(bill_input.value, current_tip, people_amount_input.value);
+
+        tip_amount.innerHTML = '$' + tip_value;
+        total_amount.textContent = '$' + total_value;
+      }
+    }
+
+    function validateInput(element) {
+      const span = element.labels[0].getElementsByTagName("span")[0];
+      if (isNaN(element.value) || element.value <= 0) {
+        element.classList.add('error');
+        element.labels[0].classList.add('error');
+        span.setAttribute('data-error', 'Incorrect value');
+        return false;
+
+      } else if (element.classList.contains('error')) {
+        element.classList.remove('error');
+        element.labels[0].classList.remove('error');
+        span.setAttribute('data-error', '');
+      }
+
+      return true;
+    }
+
+  </script>
+</body>
+
+</html>
